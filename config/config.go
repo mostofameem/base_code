@@ -21,11 +21,16 @@ const DebugMode = Mode("debug")
 const ReleaseMode = Mode("release")
 
 type Config struct {
-	Mode        Mode   `json:"mode"                       validate:"required"`
-	ServiceName string `json:"service_name"               validate:"required"`
-	HttpPort    int    `json:"http_port"                  validate:"required"`
-	JwtSecret   string `json:"jwt_secret"                 validate:"required"`
-	DB          DB     `json:"db"                         validate:"required"`
+	Mode              Mode   `json:"mode"                       validate:"required"`
+	ServiceName       string `json:"service_name"               validate:"required"`
+	HttpPort          int    `json:"http_port"                  validate:"required"`
+	JwtSecret         string `json:"jwt_secret"                 validate:"required"`
+	DB                DB     `json:"db"                         validate:"required"`
+	MigrationSource   string `json:"migrations"                 validate:"required"`
+	RmqQueuePrefix    string `json:"rmq_queue_prefix"           validate:"required"`
+	RabbitmqURL       string `json:"rmq_url"                    validate:"required"`
+	RmqReconnectDelay int    `json:"rmq_reconnect_delay"        validate:"required"`
+	RmqRetryInterval  int    `json:"rmq_retry_interval"         validate:"required"`
 }
 
 var config *Config

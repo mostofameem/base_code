@@ -5,7 +5,6 @@ import (
 	"log"
 	"net/http"
 	"order_service/config"
-	"order_service/db"
 	"order_service/web/utils"
 	"strings"
 	"time"
@@ -19,14 +18,14 @@ type AuthClaims struct {
 }
 
 // Define a custom type for the context key
-func GenerateToken(usr db.User) (string, string, error) {
+func GenerateToken(usr map[string]any) (string, string, error) {
 	conf := config.GetConfig()
 	expirationTime := time.Now().Add(5 * time.Minute).Unix()
 
 	accessToken, err := jwt.NewWithClaims(
 		jwt.SigningMethodHS256,
 		jwt.MapClaims{
-			"Id":  usr.Id,
+			"Id":  usr["id"],
 			"exp": expirationTime,
 		},
 	).SignedString([]byte(conf.JwtSecret))
@@ -40,7 +39,7 @@ func GenerateToken(usr db.User) (string, string, error) {
 	token := jwt.NewWithClaims(
 		jwt.SigningMethodHS256,
 		jwt.MapClaims{
-			"Id":  usr.Id,
+			"Id":  usr["id"],
 			"exp": Time,
 		},
 	)
